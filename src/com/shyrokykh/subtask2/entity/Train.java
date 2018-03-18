@@ -3,7 +3,7 @@ package com.shyrokykh.subtask2.entity;
 import java.util.*;
 
 public class Train<T extends Carriage> implements Iterable<T> {
-    private List<T> carriages;
+    private final List<T> carriages;
 
     public Train() {
         this.carriages = new ArrayList<T>();
@@ -13,18 +13,8 @@ public class Train<T extends Carriage> implements Iterable<T> {
         this.carriages.add(carriage);
     }
 
-    public void sort(Comparator<? super T> comparator) {
-        Collections.sort(carriages, comparator);
-    }
-
-    public int calcTotalNumberOfBaggageAndPassengers() {
-        int sum = 0;
-
-        for (T carriage : carriages) {
-            sum += carriage.getPassengerCapacity() + carriage.getBaggageCapacity();
-        }
-
-        return sum;
+    public List<T> getCarriages() {
+        return Collections.unmodifiableList(carriages);
     }
 
     @Override

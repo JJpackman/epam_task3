@@ -11,5 +11,10 @@ public class EconomClassCarriage extends Carriage {
     public int getComfortLevel() {
         return ComfortLevels.LOW;
     }
+
+    @Override
+    public Object clone() {
+        return new EconomClassCarriage(getPassengerCapacity(), getBaggageCapacity());
+    }
 }
 

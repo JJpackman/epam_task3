@@ -11,4 +11,9 @@ public class CompartmentCarriage extends Carriage {
     public int getComfortLevel() {
         return ComfortLevels.LOW;
     }
+
+    @Override
+    public Object clone() {
+        return new CompartmentCarriage(getPassengerCapacity(), getBaggageCapacity());
+    }
 }
