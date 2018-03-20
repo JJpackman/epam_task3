@@ -11,24 +11,8 @@ import java.util.*;
 public final class TrainInformationDesk {
     private TrainInformationDesk() {}
 
-    private static Carriage[] cloneCarriageCollectionItemsToArray(List<? extends Carriage> src) {
-        final Carriage[] clone = new Carriage[src.size()];
-
-        for (int curr = 0; curr < clone.length; curr++) {
-            Carriage temp = src.get(curr);
-
-            try {
-                clone[curr] = (Carriage) temp.clone();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return clone;
-    }
-
-    public static Carriage[] sort(Train<?> train, Comparator<? super Carriage> comparator) {
-        Carriage[] carriagesCopy = cloneCarriageCollectionItemsToArray(train.getCarriages());
+    public static Carriage[] sort(Train<?> train, Comparator<Carriage> comparator) {
+        Carriage[] carriagesCopy = train.getCarriagesCopy();
         Arrays.sort(carriagesCopy, comparator);
 
         return carriagesCopy;
@@ -37,7 +21,7 @@ public final class TrainInformationDesk {
     public static int calcTotalNumberOfBaggageAndPassengers(Train<?> train) {
         int sum = 0;
 
-        for (Carriage carriage : train.getCarriages()) {
+        for (Carriage carriage : train.getCarriagesCopy()) {
             sum += carriage.getPassengerCapacity() + carriage.getBaggageCapacity();
         }
 
@@ -56,7 +40,7 @@ public final class TrainInformationDesk {
 
         final List<Carriage> carriagesInRange = new ArrayList<>();
 
-        for (Carriage c : train.getCarriages()) {
+        for (Carriage c : train.getCarriagesCopy()) {
             final int capacity = c.getPassengerCapacity();
 
             if (capacity >= from && capacity <= to) {

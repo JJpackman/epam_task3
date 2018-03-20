@@ -2,7 +2,7 @@ package com.shyrokykh.subtask2.entity;
 
 import java.util.*;
 
-public class Train<T extends Carriage> implements Iterable<T> {
+public class Train<T extends Carriage> {
     private final List<T> carriages;
 
     public Train() {
@@ -13,12 +13,17 @@ public class Train<T extends Carriage> implements Iterable<T> {
         this.carriages.add(carriage);
     }
 
-    public List<T> getCarriages() {
-        return Collections.unmodifiableList(carriages);
-    }
+    public Carriage[] getCarriagesCopy() {
+        final Carriage[] copy = new Carriage[this.carriages.size()];
 
-    @Override
-    public Iterator<T> iterator() {
-        return carriages.iterator();
+        for (int i = 0; i < copy.length; i++) {
+            try {
+                copy[i] = (Carriage) carriages.get(i).clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return copy;
     }
 }
