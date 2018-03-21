@@ -8,20 +8,19 @@ public class Main {
         Store store = new Store("sportmaster");
 
         store.addDepartment("sneaker")
-                .addProduct(new Product("Nike Air Max 97", 2513.245))
-                .addProduct(new Product("Adidas Originals", 1900.82))
-                .addProduct(new Product("Nike Duckboot", 3400))
-                .addServices("consulting", "verifying pronation")
-                .addServices("cleaning sneakers")
+                .addProduct(new Product("Nike Air Max 97", 2513.245, 1))
+                .addProduct(new Product("Adidas Originals", 1900.82, 4))
+                .addProduct(new Product("Nike Duckboot", 3400, 6))
+                .addServicesAll("consulting", "verifying pronation")
+                .addServicesAll("cleaning sneakers")
         .backToStore().visitDepartment("sneaker")
-                .addProduct(new Product("asics gel lyte 3", 1990))
+                .addProduct(new Product("asics gel lyte 3", 1990, 2))
         .backToStore().exit();
 
         store.addDepartment("MMA equipment")
-                .addProduct(new Product("Punching Bags", 2000.4312))
-                .addProduct(new Product("Gloves", 1480))
-                .addServices("consulting")
-                .addServices("punch measurement")
+                .addProduct(new Product("Punching Bags", 2000.4312, 4))
+                .addProduct(new Product("Gloves", 1480, 5))
+                .addServicesAll("consulting", "punch measurement")
         .backToStore().exit();
     }
 }

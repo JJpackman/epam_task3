@@ -15,37 +15,29 @@ public class Store {
         return name;
     }
 
-    private Department findDepartment(String name) {
-        for (Department existingDep : departments) {
-            if (Objects.equals(existingDep.name.toLowerCase(), name.toLowerCase())) {
-                return existingDep;
-            }
-        }
-
-        return null;
-    }
-
     public void exit() {}
 
     public Department visitDepartment(String name) {
-        return findDepartment(name);
+        final Department newDep = new Department(name);
+        int index = this.departments.indexOf(newDep);
+
+        return index != -1 ? this.departments.get(index) : null;
     }
 
     public Department addDepartment(String name) {
-        Department dep = findDepartment(name);
+        final Department newDep = new Department(name);
+        int index = this.departments.indexOf(newDep);
 
-        if (dep != null) {
-            return dep;
+        if (index == -1) {
+            this.departments.add(newDep);
+            index = departments.size() - 1;
         }
 
-        this.departments.add(new Department(name));
-        return departments.get(departments.size() - 1);
+        return departments.get(index);
     }
 
     public boolean removeDepartment(String name) {
-        Department dep = findDepartment(name);
-
-        return dep != null && departments.remove(dep);
+        return departments.remove(new Department(name));
     }
 
     public class Department {
@@ -56,24 +48,14 @@ public class Store {
         private Department(String name) {
             this.name = name;
             this.products = new HashSet<>();
-            this.services = new LinkedList<>();
+            this.services = new ArrayList<>();
         }
 
-        private String findService(String service) {
-            for (String existingService : services) {
-                if (Objects.equals(existingService.toLowerCase(), service.toLowerCase())) {
-                    return existingService;
-                }
-            }
-
-            return null;
-        }
-
-        public Department addServices(String... services) {
+        public Department addServicesAll(String... services) {
             if (services != null) {
-                for (String service : services) {
-                    if (findService(service) == null) {
-                        this.services.add(service);
+                for (String checkedService : services) {
+                    if (!this.services.contains(checkedService)) {
+                        this.services.add(checkedService);
                     }
                 }
             }
@@ -81,18 +63,38 @@ public class Store {
             return this;
         }
 
+        public String getName() {
+            return name;
+        }
+
         public Department addProduct(Product p) {
-            this.products.add(p);
+            if (!this.products.contains(p)) {
+                this.products.add(p);
+            }
 
             return this;
         }
 
-        public Store backToStore() {
-            return Store.this;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Department that = (Department) o;
+
+            return Objects.equals(name, that.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
         }
 
         public boolean removeProduct(Product p) {
             return this.products.remove(p);
+        }
+
+        public Store backToStore() {
+            return Store.this;
         }
     }
 }
