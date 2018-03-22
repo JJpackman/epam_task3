@@ -1,36 +1,23 @@
 package com.shyrokykh.subtask3;
 
+import com.shyrokykh.subtask3.enums.Colors;
+import com.shyrokykh.subtask3.enums.MyEnum;
+import com.shyrokykh.subtask3.enums.Size;
+
 public class Main {
     public static void main(String[] args) {
-        MyEnum.init("KEK", "LOL", "KEK"); // prevents duplicates addition
+        System.out.println(Colors.BLACK);
+        System.out.println(Size.LARGE);
 
-        MyEnum.MyEnumItem kekItem = MyEnum.valueOf("KEK");
-        MyEnum.MyEnumItem lolItem = MyEnum.valueOf("LOL");
-
-        System.out.println(kekItem.ordinal());
-        System.out.println(kekItem.name());
-
-        for (MyEnum.MyEnumItem myEnumItem : MyEnum.values()) {
-            System.out.println(myEnumItem.ordinal());
-            System.out.println(myEnumItem.name());
+        for (MyEnum enumConstant : MyEnum.values(Colors.class)) {
+            System.out.println(String.format("%d: %s", enumConstant.ordinal(), enumConstant.getName()));
         }
 
-        if (kekItem.compareTo(lolItem) != 0) {
-            System.out.println(String.format("%s: %d != %s: %d",
-                    kekItem.name(), kekItem.ordinal(), lolItem.name(), lolItem.ordinal()));
+        for (MyEnum enumConstant : MyEnum.values(Size.class)) {
+            System.out.println(String.format("%d: %s", enumConstant.ordinal(), enumConstant.getName()));
         }
 
-        try {
-            MyEnum.valueOf("KgEK");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        MyEnum.MyEnumItem kekItem2 = MyEnum.valueOf("KEK");
-
-        if (kekItem.compareTo(kekItem2) == 0) {
-            System.out.println(String.format("%s: %d == %s: %d",
-                    kekItem.name(), kekItem.ordinal(), kekItem2.name(), kekItem2.ordinal()));
-        }
+        System.out.println(Colors.RED.compareTo(Colors.BLACK));
+        System.out.println(Size.LARGE.compareTo(Size.MIDDLE));
     }
 }
